@@ -1,0 +1,6 @@
+---
+- name: restart prtg-mini-probe
+  service: "name={{prtg_mini_probe_daemon}} state=restarted"
+
+- name: update prtg-mini-probe init script
+  command: "update-rc.d {{prtg_mini_probe_daemon}} defaults"

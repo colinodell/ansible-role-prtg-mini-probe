@@ -1,0 +1,68 @@
+---
+
+- name: Install dependencies
+  apt:
+    name: "{{ packages }}"
+    update_cache: yes
+    cache_valid_time: 3600
+  vars:
+    packages:
+      - build-essential
+      - git
+      - python-dev
+      - python-setuptools
+
+- name: Clone down the repository
+  git:
+    repo: "https://github.com/PRTG/PythonMiniProbe.git"
+    dest: "{{prtg_mini_probe_install_path|mandatory}}"
+    version: "{{prtg_mini_probe_install_version}}"
+
+- name: Install the necessary packages
+  shell: "python setup.py install"
+  args:
+    chdir: "{{prtg_mini_probe_install_path}}"
+
+- name: Write the init.d script
+  template:
+    src: "templates/init.j2"
+    dest: "/etc/init.d/{{prtg_mini_probe_daemon}}"
+    owner: "root"
+    group: "root"
+    mode: "0755"
+  notify:
+    - update prtg-mini-probe init script
+    - restart prtg-mini-probe
+
+- name: Write the configuration
+  template:
+    src: "templates/probe.conf.j2"
+    dest: "{{prtg_mini_probe_install_path}}/miniprobe/probe.conf"
+    owner: "{{prtg_mini_probe_run_as}}"
+    group: "{{prtg_mini_probe_run_as}}"
+    mode: "0644"
+  notify: restart prtg-mini-probe
+
+- name: Ensure logs directory exists
+  file:
+    path: "{{prtg_mini_probe_install_path}}/miniprobe/logs"
+    state: directory
+    owner: "{{prtg_mini_probe_run_as}}"
+    group: "{{prtg_mini_probe_run_as}}"
+    mode: "0755"
+
+- name: Configure logrotate.d
+  template:
+    src: "templates/rotate.j2"
+    dest: "/etc/logrotate.d/{{prtg_mini_probe_daemon}}"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+
+- name: Ensure script is executable
+  file:
+    path: "{{prtg_mini_probe_install_path}}/miniprobe/probe.py"
+    owner: "{{prtg_mini_probe_run_as}}"
+    group: "{{prtg_mini_probe_run_as}}"
+    mode: "0755"
+  notify: restart prtg-mini-probe

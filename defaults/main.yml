@@ -1,0 +1,33 @@
+---
+# User to run the mini probe as
+prtg_mini_probe_run_as: 'root'
+
+# Name of the service
+prtg_mini_probe_daemon: 'prtgprobe'
+
+# Git ref (branch or tag) to install
+prtg_mini_probe_install_version: 'master'
+
+# Where the probe should be installed to
+prtg_mini_probe_install_path: '/opt/prtg-mini-probe'
+
+# Port the PRTG server is listening to (only SSL is supported)
+prtg_mini_probe_port: 443
+
+# Probe GID
+prtg_mini_probe_gid: '{{ ansible_date_time.iso8601_micro | to_uuid }}'
+
+# Probe name
+prtg_mini_probe_name: '{{inventory_hostname}} MiniProbe'
+
+# Base interval for your sensors
+prtg_mini_probe_interval: 60
+
+# Whether the mini probe should flush buffered and cache memory
+prtg_mini_probe_clean_memory: false
+
+# Whether to enable debug logging (can create massive log files)
+prtg_mini_probe_debug_logging: false
+
+# How many subprocesses should be spawned for scanning
+prtg_mini_probe_subprocess_count: 10

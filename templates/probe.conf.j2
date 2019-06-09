@@ -1,0 +1,12 @@
+###Mini Probe Config File
+protocol:{{prtg_mini_probe_protocol|default(1)}}
+name:{{prtg_mini_probe_name}}
+cleanmem:{{prtg_mini_probe_clean_memory|ternary('True','False')}}
+server:{{prtg_mini_probe_host|mandatory}}
+gid:{{prtg_mini_probe_gid}}
+baseinterval:{{prtg_mini_probe_interval}}
+subprocs:{{prtg_mini_probe_subprocess_count}}
+key:{{prtg_mini_probe_access_key|mandatory}}
+debug:{{prtg_mini_probe_debug_logging|ternary('True','False')}}
+port:{{prtg_mini_probe_port}}
+announced:{{prtg_mini_probe_announced|default(1)}}
