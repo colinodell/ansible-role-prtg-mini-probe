@@ -3,6 +3,7 @@ dependencies: []
 
 galaxy_info:
   author: colinodell
+  role_name: prtg-mini-probe
   description: Installs the PRTG Mini Probe onto Debian-based systems
   license: "MIT"
   issue_tracker_url: https://github.com/colinodell/ansible-role-prtg-mini-probe/issues
