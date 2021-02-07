@@ -13,6 +13,12 @@ N/A
 ### Required Variables
 
 ```yaml
+prtg_mini_probe_state: 'present'
+```
+
+Whether to install ('present') or uninstall ('absent') the mini probe
+
+```yaml
 prtg_mini_probe_host: prtg.example.com
 ```
 

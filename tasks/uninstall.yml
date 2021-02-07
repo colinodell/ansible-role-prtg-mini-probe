@@ -1,0 +1,19 @@
+---
+
+- name: Stop prtg-mini-probe
+  service:
+    name: "{{prtg_mini_probe_daemon}}"
+    state: "stopped"
+
+- name: Remove the prtg-mini-probe service
+  command: "update-rc.d -f {{prtg_mini_probe_daemon}} remove"
+
+- name: Remove the prtg-mini-probe init script
+  file:
+    path: "/etc/init.d/{{prtg_mini_probe_daemon}}"
+    state: absent
+
+- name: Remove prtg-mini-probe files and configuration
+  file:
+    path: "{{prtg_mini_probe_install_path|mandatory}}"
+    state: absent

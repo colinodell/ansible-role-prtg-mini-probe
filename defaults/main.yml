@@ -1,4 +1,7 @@
 ---
+# Whether to install or uninstall the mini probe
+prtg_mini_probe_state: 'present' # or 'absent'
+
 # User to run the mini probe as
 prtg_mini_probe_run_as: 'root'
 
